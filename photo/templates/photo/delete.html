@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}- Delete{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 panel panel-default">
+        <div class="alert alert-info">
+            "{{object}}"을 삭제할까요 ?
+        </div>
+        <form action="" method="post">
+            {{form.as_p}}
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger btn-sm" value="확인">
+            <a href="{% url 'photo:photo_detail' pk=object.id%}" class="btn btn-primary btn-sm">취소</a>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

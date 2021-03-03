@@ -1,0 +1,18 @@
+<!--polls/templates/polls/results.html-->
+{% extends 'base.html' %}
+
+{% block title %}Polls results{% endblock %}
+
+{% block content %}
+    <h3>{{ question.question_text }}</h3>
+
+    <ul class="list-group">
+    {% for choice in question.choice_set.all %}
+        <li class="list-group-item">
+            {{ choice.choice_text }} -- {{ choice.votes }} 표{#{{ choice.votes|pluralize }}#}
+        </li>
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'polls:detail' question.id %}" class="btn btn-info btn-sm">다시 투표?</a>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}- Dstagram List{% endblock %}
+
+{% block content %}
+    <div class="d-flex flex-row-reverse">
+        <a href="{% url 'photo:photo_upload' %}" class="btn btn-primary btn-sm">
+            사진 추가
+        </a>
+    </div>
+    <p></p>
+    <hr/>
+    {% for post in object_list %}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4 panel panel-default">
+                <p><img src="{{post.photo.url}}" style="width: 70%;"></p>
+            </div>
+            <div class="col-md-4 panel panel-default">
+                <a href="#" class="btn btn-info btn-block btn-sm float-left disabled">
+                    {{post.author.username}} ({{post.created}})
+                </a><br><br>
+                <p>{{post.text|linebreaksbr}}</p>
+            </div>
+            <div class="col-md-2 panel panel-default">
+                <a href="{% url 'photo:photo_detail' pk=post.id %}" class="btn btn-primary btn-sm my-auto">
+                    상세 보기
+                </a>
+            </div>
+        </div>
+        <hr/>
+        <p></p>
+    {% endfor %}
+{% endblock %}
+
+{% block pagination %}
+    {% if is_paginated %}
+    <ul class="pagination justify-content-center pagination-sm">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="{% url 'photo:photo_list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">이전</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">이전</a>
+            </li>
+        {% endif %}
+
+        {% for object in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == forloop.counter %}disabled{% endif %}">
+                <a class="page-link" href="{{ request.path }}?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+            </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="{% url 'photo:photo_list' %}?page={{ page_obj.next_page_number }}">다음</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">다음</a>
+            </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+{% endblock %}
