@@ -21,16 +21,16 @@ def world_population(request):
 
 # alt_django 추가
 def alt_django(request):
-    domain = ['Europe', 'Japan', 'USA']
-    range_ = ['red', 'green', 'blue']
+    domain = ['Europe', 'Japan', 'USA', ]
+    range_ = ['red', 'green', 'blue', ]
 
     cars = data.cars()
     chart_json = alt.Chart(cars).mark_circle().encode(
-        alt.X('Miles_per_Gallon', axis=alt.Axis(title='연비 [단위: 갤론 당 마일]')),
-        alt.Y('Horsepower', axis=alt.Axis(title='마력')),
+        alt.X('Miles_per_Gallon', axis=alt.Axis(title='연비 [단위: 갤론 당 마일]'), ),
+        alt.Y('Horsepower', axis=alt.Axis(title='마력'), ),
         alt.Color('Origin',
                   legend=alt.Legend(title='원산지'),
-                  scale=alt.Scale(domain=domain, range=range_)
+                  scale=alt.Scale(domain=domain, range=range_),
         ),
     ).properties(
         width=800,
@@ -101,7 +101,6 @@ def alt_interactive(request):
     interlinked = overview & detail
     interlinked_json = interlinked.to_json()
     return render(request, 'chart/alt_interactive.html', {'interlinked_json': interlinked_json})
-
 
 
 def ticket_class_view_1(request):  # 방법 1
