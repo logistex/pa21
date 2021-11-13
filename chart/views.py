@@ -44,29 +44,29 @@ def alt_django(request):
 
 
 def alt_interactive(request):
-    domain = ['Europe', 'Japan', 'USA']
-    range_ = ['red', 'green', 'blue']
+    domain = ['Europe', 'Japan', 'USA', ]
+    range_ = ['red', 'green', 'blue', ]
 
     cars = data.cars()
     # x-축 인코딩에 대한 선택 구간 생성하여 브러쉬로 정의
-    brush = alt.selection_interval(encodings=['x'])
+    brush = alt.selection_interval(encodings=['x'], )
 
     # 브러쉬에 해당하면 진하게, 브러시에서 벗어나면 연하게
-    opacity = alt.condition(brush, alt.value(0.9), alt.value(0.1))
+    opacity = alt.condition(brush, alt.value(0.9), alt.value(0.1), )
 
     # 연도별 자동차 도수를 개괄하는 도수분포도
     # 연도별 자동차 도수를 선택하는 상호작용적 구간 브러쉬 추가
     overview = alt.Chart(cars).mark_bar().encode(
-        alt.X('Year:O', timeUnit='year',  # 연도를 추출하고 서수형으로 지정
-              axis=alt.Axis(title=None, labelAngle=0)  # 축 제목 생략, 축 눈금 레이블 각도 생략
+        alt.X('Year:O', timeUnit='year',                # 연도를 추출하고 서수형으로 지정
+              axis=alt.Axis(title=None, labelAngle=0),  # 축 제목 생략, 축 눈금 레이블 각도 생략
               ),
-        alt.Y('count()', title=None),  # 도수, 축 제목 생략
-        opacity=opacity
+        alt.Y('count()', title=None),                   # 도수, 축 제목 생략
+        opacity=opacity,
     ).add_selection(
-        brush  # 차트에 대한 구간 브러쉬 선택 추가
+        brush,                                          # 차트에 대한 구간 브러쉬 선택 추가
     ).properties(
-        width=800,  # 차트   폭 400 픽셀로 설정
-        height=150,  # 차트 높이  50 픽셀로 설정
+        width=800,                                      # 차트   폭 800 픽셀로 설정
+        height=150,                                     # 차트 높이 150 픽셀로 설정
         title = {
             'text': ['', '알테어 상호작용성', ''],
             'subtitle': ['자동차 히스토그램'],
@@ -76,8 +76,8 @@ def alt_interactive(request):
     # 개괄 도수분포도에 대응하는 상세 마력-연비 산점도
     # 브러쉬 선택에 대응하는 산점도 내부 점의 투명도 조절
     detail = alt.Chart(cars).mark_circle().encode(
-        alt.X('Miles_per_Gallon', axis=alt.Axis(title='연비 [단위: 갤론 당 마일]')),
-        alt.Y('Horsepower', axis=alt.Axis(title='마력')),
+        alt.X('Miles_per_Gallon', axis=alt.Axis(title='연비 [단위: 갤론 당 마일]'), ),
+        alt.Y('Horsepower', axis=alt.Axis(title='마력'), ),
         alt.Color('Origin',
                   legend=alt.Legend(
                       title='원산지',
@@ -85,15 +85,15 @@ def alt_interactive(request):
                       legendX=820,
                       legendY=230,
                   ),
-                  scale=alt.Scale(domain=domain, range=range_)
+                  scale=alt.Scale(domain=domain, range=range_, ),
         ),
-        opacity=opacity  # 브러쉬 선택에 대응하여 투명도 조절
+        opacity=opacity,                                # 브러쉬 선택에 대응하여 투명도 조절
     ).properties(
-        width=800,  # 차트 폭을 상단 차트와 동일하게 설정
+        width=800,                                      # 차트 폭을 상단 차트와 동일하게 설정
         height=500,
         title={
             'text': [''],
-            'subtitle': ['연비-마력 산점도']
+            'subtitle': ['연비-마력 산점도'],
         },
     )
 
@@ -101,6 +101,7 @@ def alt_interactive(request):
     interlinked = overview & detail
     interlinked_json = interlinked.to_json()
     return render(request, 'chart/alt_interactive.html', {'interlinked_json': interlinked_json})
+
 
 
 def ticket_class_view_1(request):  # 방법 1

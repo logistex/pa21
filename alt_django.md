@@ -1,3 +1,6 @@
+# 알테어 시각화 결과를 장고로 배포하기 
+
+
 - [깃허브](https://github.com/logistex/pa21)에서 코드 다운로드
 - `conda env create --file dstagram.yml` 명령으로 가상환경 복원
 - urlencode 관련 오류 대책
