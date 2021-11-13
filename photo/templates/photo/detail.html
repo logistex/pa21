@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}
+    - {{object.text|truncatechars:10}}
+{% endblock %}
+
+{% block content %}
+    <br><br>
+    <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 panel panel-default">
+
+                <p><img src="{{object.photo.url}}" style="width:100%;"></p>
+                <p>{{object.text|linebreaksbr}}</p>
+                {% if request.user.id == object.author.id %}
+                    <a href="{% url 'photo:photo_delete' pk=object.id %}"
+                       class="btn btn-primary btn-sm float-right">
+                        삭제
+                    </a>
+                    <a href="{% url 'photo:photo_update' pk=object.id %}"
+                       class="btn btn-primary btn-sm float-right">
+                        수정
+                    </a>
+                {% else %}
+                    <a href="{% url 'photo:photo_delete' pk=object.id %}"
+                       class="disabled btn btn-primary btn-sm float-right">
+                        삭제
+                    </a>
+                    <a href="{% url 'photo:photo_update' pk=object.id %}"
+                       class="disabled btn btn-primary btn-sm float-right">
+                        수정
+                    </a>
+                {% endif %}
+
+                <a href="#" class="disabled btn btn-info btn-sm float-left">
+                    {{object.author.username}} ({{object.created}})
+                </a>
+            </div>
+            <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 panel panel-default">
+                {% load disqus_tags %}      {# disqus 커스텀 태그 사용을 준비 #}
+                {% disqus_show_comments %}  {# disqus 커스텀 태그 사용 #}
+            </div>
+            <div class="col-md-2"></div>
+    </div>
+{% endblock %}

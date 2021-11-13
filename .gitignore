@@ -1,0 +1,10 @@
+*.pyc
+*~
+__pycache__
+*.zip
+.DS_Store
+.idea
+.git
+db.sqlite3
+media/
+

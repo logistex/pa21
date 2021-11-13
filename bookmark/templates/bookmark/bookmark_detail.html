@@ -1,0 +1,9 @@
+{# bookmark/templates/bookmark/bookmark_detail.html #}
+{% extends 'base.html' %}
+
+{% block title %}Detail{% endblock %}
+
+{% block content %}
+    {{object.site_name}}<br/>
+    {{object.url}}
+{% endblock %}

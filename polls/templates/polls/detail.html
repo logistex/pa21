@@ -1,0 +1,28 @@
+<!--polls/templates/polls/detail.html-->
+{% extends 'base.html' %}
+
+{% block title %}Polls detail{% endblock %}
+
+{% block content %}
+    <h3>{{ question.question_text }}</h3>
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    {% for choice in question.choice_set.all %}
+        <div class="custom-control custom-radio">
+            <input type="radio"
+                   name="choice"
+                   id="choice{{ forloop.counter }}"
+                   value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">
+                {{ choice.choice_text }}
+            </label>
+        </div>
+    {% endfor %}
+    <input type="submit" value="투표" class="btn btn-primary btn-sm">
+    </form>
+{% endblock %}

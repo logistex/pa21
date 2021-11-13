@@ -1,0 +1,20 @@
+{% extends 'chart_home.html' %}
+
+{% block title %}- 차트 - 알테어{% endblock %}
+{% block head %}
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@4"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="vis"></div>
+    <script type="text/javascript">
+        var spec = {{ chart_json|safe }};  /* JSON output for your chart's specification */
+        var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
+        vegaEmbed("#vis", spec, opt);
+    </script>
+    <div>
+        <p>연비-마력 산점도를 통하여, 연비와 마력의 반비례 상관성을 확인할 수 있습니다.</p>
+    </div>
+{% endblock content %}

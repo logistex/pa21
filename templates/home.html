@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}- 홈{% endblock %}
+{% block head %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+{#        </br>#}
+{#        <div calss="row">#}
+{#            <div class="col-12">#}
+{#                <div class="card">#}
+{#                    <div class="card-header">#}
+{#                        <img src="https://cdn0.iconfinder.com/data/icons/statistics-icons-rounded/110/Screen-Chart-128.png" alt="" width="100" height="100"/>#}
+{#                        altair 차트#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <div id="vis"></div>#}
+{#                        <script type="text/javascript">#}
+{#                        var spec = {{ chart|safe }};  /* JSON output for your chart's specification */#}
+{#                        var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */#}
+{#                        vegaEmbed("#vis", spec, opt);#}
+{#                        </script>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+        </br>
+        <div calss="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <img src="https://cdn0.iconfinder.com/data/icons/statistics-icons-rounded/110/Screen-Chart-128.png" alt="" width="100" height="100"/>
+                        대표 차트
+                    </div>
+                    <div class="card-body">
+                        <div id="container" style="margin-top: 20px;"></div>
+                        <script src="https://code.highcharts.com/highcharts.src.js"></script>
+                        <script src="https://code.highcharts.com/modules/series-label.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script>
+                            Highcharts.chart('container', {{ chart|safe }});
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        <img src="https://cdn3.iconfinder.com/data/icons/communication-218/614/2864_-_Thumbs_Up-512.png" alt="" width="100" height="100"/>
+                        최근 투표
+                    </div>
+                    <div class="card-body">
+                        <br/>{{ question.question_text }}
+                        <ul class="list-group">
+                        {% for choice in question.choice_set.all %}
+                            <li class="list-group-item">
+                                {{ choice.choice_text }} -- -- {{ choice.votes }} 표
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="card">
+                <div class="card-header">
+                    <img src="https://icons.iconarchive.com/icons/scafer31000/bubble-circle-3/1024/iBooks-icon.png" alt="" width="100" height="100"/>
+                    최근 북마크
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Site</th>
+                                <th scope="col">URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bookmark in bookmarks %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'bookmark:detail'  pk=bookmark.id %}">{{bookmark.site_name|truncatechars:7}}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{bookmark.url}}" target="_blank">{{bookmark.url}}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <img src="https://i.ya-webdesign.com/images/instagram-logo-circle-png-4.gif" alt="" width="100" height="100"/>
+                        &nbsp;최근 사진
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">photo</th>
+                                    <th scope="col">text</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pic in photos %}
+                                    <tr>
+                                        <td style="width:50%">
+                                            <img src="{{ pic.photo.url }}" style="width: 70%;">
+                                        </td>
+                                        <td style="width:50%">
+                                            <a href="{% url 'photo:photo_detail'  pk=pic.id %}">{{pic.text|truncatechars:10}}</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

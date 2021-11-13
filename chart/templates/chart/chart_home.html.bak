@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}- Chart Home{% endblock %}
+
+{% block submenu %}
+
+    <nav class="navbar navbar-dark blue navbar-expand-md w-100 justify-content-center">
+        <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
+            <ul class="navbar-nav w-100 justify-content-center">
+                {% if user.is_authenticated %}
+                    <li class="nav-item {% if request.path == covid19new %} active {% endif %}">
+                        <a class="nav-link" href="{% url 'chart:covid19new' %}">코로나19</a>
+                    </li>
+                    <li class="nav-item {% if request.path == world_population %} active {% endif %}">
+                        <a class="nav-link" href="{% url 'chart:world_population' %}">세계-인구</a>
+                    </li>
+                    <li class="nav-item {% if request.path == ticket_class_view_1 %} active {% endif %}">
+                        <a class="nav-link" href="{% url 'chart:ticket_class_view_1' %}">타이타닉-1</a>
+                    </li>
+                    <li class="nav-item {% if request.path == ticket_class_view_2 %} active {% endif %}">
+                        <a class="nav-link" href="{% url 'chart:ticket_class_view_2' %}">타이타닉-2</a>
+                    </li>
+                    <li class="nav-item {% if request.path == ticket_class_view_3 %} active {% endif %}">
+                        <a class="nav-link" href="{% url 'chart:ticket_class_view_3' %}">타이타닉-3</a>
+                    </li>
+                    <li class="nav-item {% if request.path == json_example %} active {% endif %}">
+                        <a class="nav-link" href="{% url 'chart:json_example' %}">JSON-예제</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+{% endblock submenu %}
+
+{% block content %}
+{% endblock content%}
